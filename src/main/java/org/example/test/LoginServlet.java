@@ -10,8 +10,8 @@ import java.io.IOException;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    private static final String FIXED_USERNAME = "Anaïs";
-    private static final String FIXED_PASSWORD = "123";
+    private static final String FIXED_USERNAME = "";
+    private static final String FIXED_PASSWORD = "";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
