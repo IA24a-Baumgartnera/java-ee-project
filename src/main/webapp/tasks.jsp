@@ -3,29 +3,7 @@
 <html>
 <head>
     <title>Alle Aufgaben</title>
-    <style>
-        body { background-color: #4A6FA5; color: white; text-align: center; font-size: 20px; }
-        .container { width: 50%; margin: auto; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 20px; }
-        th, td { padding: 15px; border: 1px solid white; text-align: center; }
-        th { font-size: 22px; }
-        .task-input { width: 80%; padding: 5px; font-size: 20px; }
-        .checkbox { width: 25px; height: 25px; }
-        .btn-container { margin-top: 20px; }
-        .btn { padding: 12px 20px; font-size: 18px; background-color: white; color: #4A6FA5; border: none; cursor: pointer; }
-        .logout-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 18px;
-            font-size: 16px;
-            background-color: white;
-            color: #4A6FA5;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 </head>
 <body>
 <button type="button" onclick="location.href='LogoutServlet'" class="logout-btn">Logout</button>
@@ -88,8 +66,8 @@
         </table>
         <br>
         <div class="btn-container">
-            <input type="submit" value="Erledigte Aufgaben leoschen" class="btn">
-            <button type="button" onclick="location.href='todo.jsp'" class="btn">Eine weitere Aufgabe hinzufuegen</button>
+            <input type="submit" value="Erledigte Aufgaben l&ouml;schen" class="btn">
+            <button type="button" onclick="location.href='todo.jsp'" class="btn">Eine weitere Aufgabe hinzuf&uuml;gen</button>
         </div>
     </form>
 </div>
