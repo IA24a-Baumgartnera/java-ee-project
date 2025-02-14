@@ -2,20 +2,24 @@
 <html>
 <head>
     <title>Login</title>
-    <style>
-        body { background-color: #4A6FA5; color: white; text-align: center; }
-        form { margin-top: 100px; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 </head>
 <body>
 <h2>Willkommen</h2>
-<% if (request.getParameter("error") != null) { %>
-<p style="color: #ff0000; font-weight: bold; ">Falscher Benutzername oder Passwort!</p>
-<% } %>
-<form action="LoginServlet" method="post">
-    Benutzername: <input type="text" name="username"><br><br>
-    Passwort: <input type="password" name="password"><br><br>
-    <input type="submit" value="Anmelden">
-</form>
+
+<!-- Registrieren Button oben rechts -->
+<button class="register-btn" onclick="location.href='register.jsp'">Registrieren</button>
+
+<div class="form-container">
+    <form action="LoginServlet" method="post">
+        <label>Benutzername:</label><br>
+        <input type="text" name="username" required><br><br>
+
+        <label>Passwort:</label><br>
+        <input type="password" name="password" required><br><br>
+
+        <button type="submit" class="btn">Anmelden</button>
+    </form>
+</div>
 </body>
 </html>

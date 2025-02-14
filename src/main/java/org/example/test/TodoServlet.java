@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @WebServlet("/TodoServlet")
 public class TodoServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String taskName = request.getParameter("taskName");

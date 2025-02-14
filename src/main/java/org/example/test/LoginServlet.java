@@ -7,21 +7,35 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    private static final String FIXED_USERNAME = "Anaïs";
-    private static final String FIXED_PASSWORD = "123";
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (FIXED_USERNAME.equals(username) && FIXED_PASSWORD.equals(password)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", username);
-            response.sendRedirect("todo.jsp");
-        } else {
+        try (Connection conn = tododatabase.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM users WHERE username = ? AND password = ?")) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user_id", rs.getInt("id"));
+                session.setAttribute("username", username);
+                response.sendRedirect("todo.jsp");
+            } else {
+                response.sendRedirect("login.jsp?error=1");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
             response.sendRedirect("login.jsp?error=1");
         }
     }
