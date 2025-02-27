@@ -1,75 +1,64 @@
 <%@ page import="java.util.List, java.util.ArrayList, java.util.Comparator" %>
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alle Aufgaben</title>
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css?v=2">
+
 </head>
 <body>
 <button type="button" onclick="location.href='LogoutServlet'" class="logout-btn">Logout</button>
 <h2>Alle deine Aufgaben</h2>
-<div class="container">
-    <form action="DeleteTaskServlet" method="post">
-        <table>
-            <tr>
-                <th>Wenig</th>
-                <th>Mittel</th>
-                <th>Hoch</th>
-            </tr>
-            <%
-                List<String[]> tasks = (List<String[]>) session.getAttribute("tasks");
-                if (tasks == null) {
-                    tasks = new ArrayList<>();
-                }
 
-                List<String[]> wenigTasks = new ArrayList<>();
-                List<String[]> mittelTasks = new ArrayList<>();
-                List<String[]> hochTasks = new ArrayList<>();
-
-                for (String[] task : tasks) {
-                    switch (task[2]) {
-                        case "Wenig": wenigTasks.add(task); break;
-                        case "Mittel": mittelTasks.add(task); break;
-                        case "Hoch": hochTasks.add(task); break;
-                    }
-                }
-
-                Comparator<String[]> dateComparator = (task1, task2) -> task1[1].compareTo(task2[1]);
-                wenigTasks.sort(dateComparator);
-                mittelTasks.sort(dateComparator);
-                hochTasks.sort(dateComparator);
-
-                int maxRows = Math.max(wenigTasks.size(), Math.max(mittelTasks.size(), hochTasks.size()));
-                for (int i = 0; i < maxRows; i++) {
-            %>
-            <tr>
-                <td>
-                    <% if (i < wenigTasks.size()) { %>
-                    <input type='text' class='task-input' value='<%= wenigTasks.get(i)[0] + " - " + wenigTasks.get(i)[1] %>' readonly>
-                    <input type='checkbox' name='task' value='<%= wenigTasks.get(i)[0] %>' class='checkbox'>
-                    <% } %>
-                </td>
-                <td>
-                    <% if (i < mittelTasks.size()) { %>
-                    <input type='text' class='task-input' value='<%= mittelTasks.get(i)[0] + " - " + mittelTasks.get(i)[1] %>' readonly>
-                    <input type='checkbox' name='task' value='<%= mittelTasks.get(i)[0] %>' class='checkbox'>
-                    <% } %>
-                </td>
-                <td>
-                    <% if (i < hochTasks.size()) { %>
-                    <input type='text' class='task-input' value='<%= hochTasks.get(i)[0] + " - " + hochTasks.get(i)[1] %>' readonly>
-                    <input type='checkbox' name='task' value='<%= hochTasks.get(i)[0] %>' class='checkbox'>
-                    <% } %>
-                </td>
-            </tr>
-            <% } %>
-        </table>
-        <br>
-        <div class="btn-container">
-            <input type="submit" value="Erledigte Aufgaben l&ouml;schen" class="btn">
-            <button type="button" onclick="location.href='todo.jsp'" class="btn">Eine weitere Aufgabe hinzuf&uuml;gen</button>
+<div class="task-container">
+    <div class="task-column">
+        <h3>Wenig</h3>
+        <%
+            List<String[]> tasks = (List<String[]>) session.getAttribute("tasks");
+            if (tasks == null) {
+                tasks = new ArrayList<>(); // Falls null, wird eine leere Liste verwendet
+            }
+            for (String[] task : tasks) {
+                if (task.length >= 3 && "Wenig".equals(task[2])) {
+        %>
+        <div class="task-item">
+            <input type='text' class='task-input' value='<%= task[0] + " - " + task[1] %>' readonly>
+            <input type='checkbox' name='task' value='<%= task[0] %>' class='checkbox'>
         </div>
+        <% } } %>
+    </div>
+
+    <div class="task-column">
+        <h3>Mittel</h3>
+        <% for (String[] task : tasks) {
+            if (task.length >= 3 && "Mittel".equals(task[2])) { %>
+        <div class="task-item">
+            <input type='text' class='task-input' value='<%= task[0] + " - " + task[1] %>' readonly>
+            <input type='checkbox' name='task' value='<%= task[0] %>' class='checkbox'>
+        </div>
+        <% } } %>
+    </div>
+
+    <div class="task-column">
+        <h3>Hoch</h3>
+        <% for (String[] task : tasks) {
+            if (task.length >= 3 && "Hoch".equals(task[2])) { %>
+        <div class="task-item">
+            <input type='text' class='task-input' value='<%= task[0] + " - " + task[1] %>' readonly>
+            <input type='checkbox' name='task' value='<%= task[0] %>' class='checkbox'>
+        </div>
+        <% } } %>
+    </div>
+</div>
+
+<div class="btn-container">
+    <form action="DeleteTaskServlet" method="post">
+        <input type="submit" value="Erledigte Aufgaben l&ouml;schen" class="btn">
     </form>
+    <button type="button" onclick="location.href='todo.jsp'" class="btn">Eine weitere Aufgabe hinzuf&uuml;gen</button>
+    <button type="button" onclick="location.href= 'login.jsp'" class="btn">Logout</button>
 </div>
 </body>
 </html>

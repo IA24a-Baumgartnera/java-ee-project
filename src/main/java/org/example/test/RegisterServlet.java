@@ -6,10 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -17,27 +13,11 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        try (Connection conn = tododatabase.getConnection();
-             PreparedStatement checkStmt = conn.prepareStatement("SELECT id FROM users WHERE username = ?");
-             PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?)")) {
-
-            checkStmt.setString(1, username);
-            ResultSet rs = checkStmt.executeQuery();
-
-            if (rs.next()) {
-                // Benutzername existiert bereits
-                response.sendRedirect("register.jsp?error=2");
-            } else {
-                // Benutzer registrieren
-                insertStmt.setString(1, username);
-                insertStmt.setString(2, password);
-                insertStmt.executeUpdate();
-                response.sendRedirect("register.jsp?success=1"); // Erfolgreich registriert
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.sendRedirect("register.jsp?error=3");
+        UserDao userDao = new UserDao();
+        if (userDao.registerUser(username, password)) {
+            response.sendRedirect("login.jsp?success=1"); // Erfolgreiche Registrierung
+        } else {
+            response.sendRedirect("register.jsp?error=2"); // Benutzername existiert bereits
         }
     }
 }

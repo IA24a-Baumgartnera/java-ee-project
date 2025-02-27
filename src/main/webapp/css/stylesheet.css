@@ -1,73 +1,54 @@
-/* Allgemeines Styling */
 body {
-    background-color: #4A6FA5;
+    background-color: #4A6FA5; /* Hintergrundfarbe passend zum Screenshot */
     color: white;
-    text-align: center;
-    font-size: 20px;
     font-family: Arial, sans-serif;
-    margin: 0;
+    text-align: center;
+}
+
+.task-container {
+    display: flex;
+    justify-content: center; /* Zentriert die Spalten horizontal */
+    gap: 20px; /* Abstand zwischen den Spalten */
+    padding: 20px;
+}
+
+.task-column {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #4A6FA5;
+    width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
 }
 
-/* Container für das Login-Formular */
-.form-container {
-    background-color: white;
-    color: #4A6FA5;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 350px;
-    text-align: center;
-}
-
-/* Eingabefelder */
-input[type="text"], input[type="password"] {
-    font-size: 18px;
+.task-item {
+    background-color: #f0f0f0;
     padding: 10px;
-    width: 90%;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: 1px solid #4A6FA5;
-    text-align: center;
-}
-
-/* Buttons */
-.btn {
-    border: none;
-    color: white;
-    background-color: #4A6FA5;
-    font-size: 18px;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-radius: 10px;
+    margin: 5px;
+    border-radius: 5px;
     width: 100%;
-    margin-top: 10px;
-    transition: background-color 0.3s;
+    text-align: left;
 }
 
-.btn:hover {
-    background-color: #3b5d85;
+.btn-container {
+    margin-top: 20px;
 }
 
-/* Registrieren Button oben rechts */
-.register-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px 16px;
-    font-size: 16px;
+button, .btn {
     background-color: white;
     color: #4A6FA5;
     border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 10px;
-    transition: background-color 0.3s;
+    margin: 5px;
+    font-weight: bold;
 }
 
-.register-btn:hover {
-    background-color: #e0e0e0;
+button:hover, .btn:hover {
+    background-color: #f0f0f0;
 }

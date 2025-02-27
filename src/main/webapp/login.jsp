@@ -8,15 +8,15 @@
 <h2>Willkommen</h2>
 
 <!-- Registrieren Button oben rechts -->
-<button class="register-btn" onclick="location.href='register.jsp'">Registrieren</button>
+<button class="register-btn" onclick="window.location.href='register.jsp'">Registrieren</button>
 
 <div class="form-container">
     <form action="LoginServlet" method="post">
-        <label>Benutzername:</label><br>
-        <input type="text" name="username" required><br><br>
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required>
 
-        <label>Passwort:</label><br>
-        <input type="password" name="password" required><br><br>
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required>
 
         <button type="submit" class="btn">Anmelden</button>
     </form>
