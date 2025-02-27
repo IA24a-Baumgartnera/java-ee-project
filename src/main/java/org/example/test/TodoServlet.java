@@ -7,39 +7,42 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Comparator;
-import java.util.stream.Collectors;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.UUID;
 
 @WebServlet("/TodoServlet")
 public class TodoServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String taskName = request.getParameter("taskName");
-        String dueDate = request.getParameter("dueDate");
-        String priority = request.getParameter("priority");
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("user_id");
 
-        if (taskName == null || taskName.trim().isEmpty() || priority == null) {
-            response.sendRedirect("todo.jsp?error=1");
+        if (userId == null) {
+            response.sendRedirect("login.jsp");
             return;
         }
 
-        HttpSession session = request.getSession();
-        List<String[]> tasks = (List<String[]>) session.getAttribute("tasks");
-        if (tasks == null) {
-            tasks = new ArrayList<>();
+        String aufgabeId = UUID.randomUUID().toString(); // Eindeutige ID generieren
+        String beschreibung = request.getParameter("taskName");
+        String status = "offen";  // Standardmäßig "offen"
+        int kategorieId = Integer.parseInt(request.getParameter("kategorie"));
+        int prioritaetId = Integer.parseInt(request.getParameter("priority"));
+
+        try (Connection conn = DbConnector.getConnection()) {
+            String sql = "INSERT INTO Aufgabe (Aufgabe_ID, user_id, Beschreibung, Status, Kategorie_ID, Priorität_ID) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, aufgabeId);
+            stmt.setInt(2, userId);
+            stmt.setString(3, beschreibung);
+            stmt.setString(4, status);
+            stmt.setInt(5, kategorieId);
+            stmt.setInt(6, prioritaetId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        tasks.add(new String[]{taskName, dueDate, priority});
-
-        // Aufgaben sortieren nach Priorität
-        tasks = tasks.stream()
-                .sorted(Comparator.comparing(task -> task[2]))
-                .collect(Collectors.toList());
-
-        session.setAttribute("tasks", tasks);
         response.sendRedirect("tasks.jsp");
     }
 }

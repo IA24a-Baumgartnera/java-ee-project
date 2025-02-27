@@ -1,0 +1,85 @@
+body {
+    background-color: #4A6FA5; /* Hintergrundfarbe passend zum Screenshot */
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.task-container {
+    display: flex;
+    justify-content: center; /* Zentriert die Spalten horizontal */
+    gap: 20px; /* Abstand zwischen den Spalten */
+    padding: 20px;
+}
+
+.task-column {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #4A6FA5;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task-item {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: left;
+}
+
+.btn-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+button {
+    background-color: white;
+    color: #4A6FA5;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-weight: bold;
+
+}
+
+.btn {
+    background-color: white;
+    color: #4A6FA5;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-weight: bold;
+}
+
+
+.logout-btn {
+    background-color: white;
+    color: #4A6FA5;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    position: absolute;
+    right: 20px;
+
+}
+
+button:hover, .btn:hover {
+    background-color: #f0f0f0;
+}
