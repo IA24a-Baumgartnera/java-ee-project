@@ -7,7 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.UUID;
 
 @WebServlet("/TodoServlet")
 public class TodoServlet extends HttpServlet {
@@ -20,14 +23,26 @@ public class TodoServlet extends HttpServlet {
             return;
         }
 
-        String taskName = request.getParameter("taskName");
-        String dueDate = request.getParameter("dueDate");
-        String priority = request.getParameter("priority");
+        String aufgabeId = UUID.randomUUID().toString(); // Eindeutige ID generieren
+        String beschreibung = request.getParameter("taskName");
+        String status = "offen";  // Standardmäßig "offen"
+        int kategorieId = Integer.parseInt(request.getParameter("kategorie"));
+        int prioritaetId = Integer.parseInt(request.getParameter("priority"));
 
-        TodoDao todoDao = new TodoDao();
-        todoDao.addTask(userId, taskName, dueDate, priority);
+        try (Connection conn = DbConnector.getConnection()) {
+            String sql = "INSERT INTO Aufgabe (Aufgabe_ID, user_id, Beschreibung, Status, Kategorie_ID, Priorität_ID) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, aufgabeId);
+            stmt.setInt(2, userId);
+            stmt.setString(3, beschreibung);
+            stmt.setString(4, status);
+            stmt.setInt(5, kategorieId);
+            stmt.setInt(6, prioritaetId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        session.setAttribute("tasks", todoDao.getTasks(userId));
         response.sendRedirect("tasks.jsp");
     }
 }

@@ -58,7 +58,6 @@
         <input type="submit" value="Erledigte Aufgaben l&ouml;schen" class="btn">
     </form>
     <button type="button" onclick="location.href='todo.jsp'" class="btn">Eine weitere Aufgabe hinzuf&uuml;gen</button>
-    <button type="button" onclick="location.href= 'login.jsp'" class="btn">Logout</button>
 </div>
 </body>
 </html>

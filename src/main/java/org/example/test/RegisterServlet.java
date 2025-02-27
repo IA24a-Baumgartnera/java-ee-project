@@ -14,7 +14,7 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserDao userDao = new UserDao();
-        if (userDao.registerUser(username, password)) {
+        if (userDao.validateUser(username, password)) { // Korrekte Methode aufrufen
             response.sendRedirect("login.jsp?success=1"); // Erfolgreiche Registrierung
         } else {
             response.sendRedirect("register.jsp?error=2"); // Benutzername existiert bereits
